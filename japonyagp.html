@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yarış Sonuçları - F1 Bilet</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        .navbaricon:hover { color: rgb(189, 61, 61); transition: all ease 0.3s; }
+        .renk:hover { color: #e10600 !important; transition: 0.2s ease; }
+        .btn-register:hover { background-color: #ff1f1f !important; color: white !important; }
+        
+        @media (max-width:768px) { .deneme2 { width: 100% !important; height: 100%; } }
+        @media (min-width:768px) { .deneme { width: 50%; height: 100%; } }
+
+        .track-info-container {
+            background: #151515;
+            border-radius: 12px;
+            padding: 25px;
+            border-top: 3px solid #e10600;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            color: white;
+            margin-bottom: 30px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .track-map-box {
+            background-color: #222;
+            border: 2px dashed #444;
+            border-radius: 8px;
+            height: 220px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #777;
+            overflow: hidden;
+        }
+        .track-map-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+            padding: 10px;
+        }
+
+        .pole-box {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border-left: 4px solid #00ff95;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .stat-box {
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 15px;
+            height: 100%;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .stat-box:hover { border-color: #e10600; transform: translateY(-3px); }
+        .stat-title { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        .stat-value { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+        .stat-detail { font-size: 12px; color: #00ff95; }
+
+        .results-container {
+            background: #151515;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            font-family: 'Orbitron', sans-serif;
+        }
+        .f1-table { width: 100%; color: white; border-collapse: separate; border-spacing: 0 8px; }
+        .f1-table th { color: #bbb; font-size: 12px; text-transform: uppercase; padding: 10px 15px; border-bottom: 1px solid #333; letter-spacing: 1px; }
+        .f1-table th:last-child { text-align: right; }
+        
+        .f1-table td { background-color: #222; padding: 10px 15px; vertical-align: middle; transition: 0.3s ease; }
+        .f1-table td:first-child { border-left: 4px solid transparent; border-top-left-radius: 8px; border-bottom-left-radius: 8px; font-weight: bold; text-align: center; width: 50px; }
+        .f1-table td:last-child { border-top-right-radius: 8px; border-bottom-right-radius: 8px; font-weight: bold; color: #00ff95; text-align: right; font-size: 16px; width: 80px; }
+        
+        .f1-table tbody tr:hover td { background-color: #2a2a2a; cursor: default; }
+        .f1-table tbody tr:hover td:first-child { border-left: 4px solid #e10600; }
+
+        .driver-name { font-size: 15px; font-weight: 600; letter-spacing: 0.5px; display: block; }
+        .team-name-small { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+        .time-gap { font-family: monospace; font-size: 14px; color: #ddd; }
+    </style>
+</head>
+<body class="bg-secondary" style="overflow-x: hidden;">
+    
+    <nav class="navbar navbar-expand-md py-0" style="background-color: rgb(86, 86, 86);">
+        <div class="container-fluid d-flex">
+            <a href="f1.html" class="navbar-brand" style="padding-right: 5%;">
+                <img src="f1logo.png" alt="" style="height: 15vh;">
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#buton">
+                <i class="fa-solid fa-bars text-white fs-3"></i>
+            </button>
+            <div class="collapse navbar-collapse align-items-stretch" id="buton">
+                <ul class="navbar-nav nav-fill deneme mx-auto">
+                    <li class="nav-item d-flex align-items-center navbaricon"><a href="takimlarnew.html" class="nav-link text-white renk" style="letter-spacing: 0.5px;">TAKIMLAR</a></li>                    
+                    <li class="nav-item d-flex align-items-center navbaricon"><a href="pilotlar.html" class="nav-link text-white renk" style="letter-spacing: 0.5px;">PİLOTLAR</a></li>
+                    <li class="nav-item d-flex align-items-center navbaricon"><a href="takvim.html" class="nav-link renk" style="letter-spacing: 0.5px; color: white;">TAKVİM</a></li>
+                    <li class="nav-item d-flex align-items-center navbaricon"><a href="f1.html" class="nav-link text-white renk" style="letter-spacing: 0.5px;">BİLETLER</a></li>
+                </ul>
+                <div class="d-flex align-items-center justify-content-center gap-3 ms-md-auto py-3 py-md-0 pe-md-4">
+                    <a href="javascript:void(0);" onclick="girisYap()" class="btn btn-outline-light btn-sm px-3 py-2" style="font-family: 'Orbitron', sans-serif;">Giriş Yap</a>
+                    <a href="javascript:void(0);" onclick="kayitOl()" class="btn btn-register btn-sm px-3 py-2 text-white" style="background-color: #e10600; font-family: 'Orbitron', sans-serif;">Kayıt Ol</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5 mb-5">
+        <h2 class="text-white mb-4" style="font-family: 'Orbitron', sans-serif;">JAPONYA GRAND PRIX 2026</h2>
+
+        <div class="track-info-container">
+            <div class="row">
+                <div class="col-lg-5 mb-4 mb-lg-0">
+                    <div class="track-map-box">
+                        <div class="p-3">
+                            
+    
+                            <img src="japonya.jpg" alt="Track Map">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-7 d-flex flex-column justify-content-between">
+                    
+                    <div class="pole-box d-flex justify-content-between align-items-center">
+                        <div>
+                            <span style="color: #bbb; font-size: 11px; letter-spacing: 1px;">POLE POZİSYONU</span><br>
+                            <span style="font-size: 20px; font-weight: 700; color: white;">Kimi Antonelli</span>
+                        </div>
+                        <div style="font-family: monospace; font-size: 20px; color: #00ff95;">⏱️ 1:28.778</div>
+                    </div>
+
+                    <div class="row g-3 h-100">
+                        <div class="col-md-4">
+                            <div class="stat-box">
+                                <div class="stat-title">En Çok Kazanan</div>
+                                <div class="stat-value">Micheal Schumacher</div>
+                                <div class="stat-detail">6 Galibiyet</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="stat-box">
+                                <div class="stat-title">En Çok Pole Alan</div>
+                                <div class="stat-value">Micheal Schumacher</div>
+                                <div class="stat-detail">8 Pole</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="stat-box">
+                                <div class="stat-title">Pist Rekoru (Hızlı Tur)</div>
+                                <div class="stat-value">Micheal Schumacher</div>
+                                <div class="stat-detail">1:26.983 (2025)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <h4 class="text-white mb-3" style="font-family: 'Orbitron', sans-serif;">Yarış Klasmanı</h4>
+        <div class="results-container">
+            <table class="f1-table">
+                <thead>
+                    <tr>
+                        <th>Sıra</th>
+                        <th>Pilot</th>
+                        <th>Süre / Fark</th>
+                        <th class="text-end">Puan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><span class="driver-name">Kimi Antonelli</span><span class="team-name-small">Mercedes</span></td>
+                        <td class="time-gap">1:28:03.403</td>
+                        <td>25</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><span class="driver-name">Oscar Piastri</span><span class="team-name-small">McLaren</span></td>
+                        <td class="time-gap">+13.722s</td>
+                        <td>18</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><span class="driver-name">Charles Leclerc</span><span class="team-name-small">Ferrari</span></td>
+                        <td class="time-gap">+15.270s</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><span class="driver-name">George Russel</span><span class="team-name-small">Mercedes</span></td>
+                        <td class="time-gap">+15.754s</td>
+                        <td>12</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><span class="driver-name">Lando Norris</span><span class="team-name-small">McLaren</span></td>
+                        <td class="time-gap">+23.479s</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td><span class="driver-name">Lewis Hamilton </span><span class="team-name-small">Ferrari</span></td>
+                        <td class="time-gap">+25.037s</td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td><span class="driver-name">Pierre Gasly</span><span class="team-name-small">Alpine</span></td>
+                        <td class="time-gap">+32.340s</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td><span class="driver-name">Max Verstappen</span><span class="team-name-small">Red Bull</span></td>
+                        <td class="time-gap">+32.677s</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td><span class="driver-name">Liam Lawson</span><span class="team-name-small">Racing Bulls</span></td>
+                        <td class="time-gap">+50.180s</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td><span class="driver-name">Esteban Ocon</span><span class="team-name-small">Haas</span></td>
+                        <td class="time-gap">+51.216s</td>
+                        <td>1</td>
+                    </tr>
+            
+                    <tr>
+                        <td>11</td>
+                        <td><span class="driver-name">Nico Hulkenberg</span><span class="team-name-small">Audi</span></td>
+                        <td class="time-gap">+52.280s</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td><span class="driver-name">Isack Hadjar</span><span class="team-name-small">Red Bull</span></td>
+                        <td class="time-gap">+56.154</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td><span class="driver-name">Gabriel Bortoleto</span><span class="team-name-small">Audi</span></td>
+                        <td class="time-gap">+59.078s</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td><span class="driver-name">Arvid Lindblad</span><span class="team-name-small">Racing Bulls</span></td>
+                        <td class="time-gap">+59.848s</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>15</td>
+                        <td><span class="driver-name">Carlos Sainz</span><span class="team-name-small">Williams</span></td>
+                        <td class="time-gap">+65.008s</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>16</td>
+                        <td><span class="driver-name">Franco Colapinto</span><span class="team-name-small">Alpine</span></td>
+                        <td class="time-gap">+65.773s</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>17</td>
+                        <td><span class="driver-name">Sergio Perez</span><span class="team-name-small">Cadillac</span></td>
+                        <td class="time-gap">+92.453s</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>18</td>
+                        <td><span class="driver-name">Fernando Alonso</span><span class="team-name-small">Aston Martin</span></td>
+                        <td class="time-gap">+1 tur</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>19</td>
+                        <td><span class="driver-name">Valteri Bottas</span><span class="team-name-small">Cadillac</span></td>
+                        <td class="time-gap">+1 tur</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>20</td>
+                        <td><span class="driver-name">Alexander Albon</span><span class="team-name-small">Williams</span></td>
+                        <td class="time-gap">+2 tur</td>
+                        <td>0</td>
+                    </tr>
+                    <tr style="opacity: 0.6;">
+                        <td>NC</td>
+                        <td><span class="driver-name">Lance Stroll</span><span class="team-name-small">Aston Martin</span></td>
+                        <td class="time-gap text-danger">DNF</td>
+                        <td>0</td>
+                    </tr>
+                    <tr style="opacity: 0.6;">
+                        <td>NC</td>
+                        <td><span class="driver-name">Oliver Bearman</span><span class="team-name-small">Haas</span></td>
+                        <td class="time-gap text-danger">DNF</td>
+                        <td>0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script>
+
+async function kayitOl() {
+    const kullaniciAdi = prompt("F1 Bilet Sistemi - Kullanıcı Adı Belirleyin:");
+    if (!kullaniciAdi || kullaniciAdi.trim() === "") return;
+    const eposta = prompt("E-posta Adresinizi Girin:");
+    if (!eposta || eposta.trim() === "") return;
+    const sifre = prompt("Şifrenizi Belirleyin:");
+    if (!sifre || sifre.trim() === "") return;
+
+    try {
+        const response = await fetch('http://localhost:5057/api/kayit-ol', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ kullaniciAdi: kullaniciAdi, eposta: eposta, sifre: sifre })
+        });
+        const sonuc = await response.json();
+        if (response.ok) {
+            alert(`🎉 ${sonuc.mesaj}\nArtık belirlediğiniz bilgilerle giriş yapabilirsiniz.`);
+        } else {
+            alert(`⚠️ Kayıt Hatası: ${sonuc.hata}`);
+        }
+    } catch (error) {
+        alert("Sistem hatası: API ile bağlantı kurulamadı!");
+    }
+}
+
+async function girisYap() {
+    const kullaniciAdi = prompt("Kullanıcı Adınız:");
+    if (!kullaniciAdi || kullaniciAdi.trim() === "") return;
+    const sifre = prompt("Şifreniz:");
+    if (!sifre || sifre.trim() === "") return;
+
+    try {
+        const response = await fetch('http://localhost:5057/api/giris-yap', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ kullaniciAdi: kullaniciAdi, sifre: sifre })
+        });
+        const sonuc = await response.json();
+        if (response.ok) {
+            alert(sonuc.mesaj); 
+            localStorage.setItem("aktifKullanici", sonuc.kullaniciAdi);
+        } else {
+            alert(`⚠️ Giriş Başarısız: ${sonuc.hata}`);
+        }
+    } catch (error) {
+        alert("Sistem hatası: API ile bağlantı kurulamadı!");
+    }
+}
+</script>
+</body>
+</html>

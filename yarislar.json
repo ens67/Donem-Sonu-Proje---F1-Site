@@ -1,0 +1,26 @@
+[
+  {
+    "Id": 1,
+    "Ad": "Kanada GP",
+    "Tarih": "22-24 MAYIS",
+    "Resim": "kanada.jpeg",
+    "Fiyat": 450,
+    "Kapasite": 148
+  },
+  {
+    "Id": 2,
+    "Ad": "Monako GP",
+    "Tarih": "05-07 HAZ\u0130RAN",
+    "Resim": "monako.jpeg",
+    "Fiyat": 550,
+    "Kapasite": 114
+  },
+  {
+    "Id": 3,
+    "Ad": "\u0130spanya GP",
+    "Tarih": "12-14 HAZ\u0130RAN",
+    "Resim": "ispanya.jpeg",
+    "Fiyat": 600,
+    "Kapasite": 84
+  }
+]

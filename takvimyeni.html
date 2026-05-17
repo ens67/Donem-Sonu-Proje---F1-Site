@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yarış Takvimi - F1 Bilet</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        .navbaricon:hover {
+            color: rgb(189, 61, 61);transition: all ease 0.3s;
+        }
+        .renk:hover {
+            color: #e10600 !important;transition: 0.2s ease;
+        }
+        .btn-register:hover {
+            background-color: #ff1f1f !important;color: white !important;
+        }
+        
+        @media (max-width:768px) {
+            .deneme2 { width: 100% !important; height: 100%; }
+        }
+        @media (min-width:768px) {
+            .deneme { width: 50%; height: 100%; }
+        }
+        .calendar-grid {
+            display: grid;grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));gap: 20px;
+        }
+        .race-card {
+            background: #151515;border-radius: 12px;padding: 20px;border-top: 3px solid #e10600;border-right: 1px solid #222;border-bottom: 1px solid #222;border-left: 1px solid #222;transition: 0.3s ease;font-family: 'Orbitron', sans-serif;color: white;cursor: pointer;box-shadow: 0 5px 15px rgba(0,0,0,0.3);display: flex;flex-direction: column;justify-content: space-between;
+        }
+        .race-card:hover {
+            transform: translateY(-5px);border-top: 3px solid #00ff95;background-color: #1a1a1a;box-shadow: 0 8px 25px rgba(0, 255, 149, 0.15);
+        }
+        .race-header {
+            display: flex;justify-content: space-between;align-items: center;border-bottom: 1px solid #333;padding-bottom: 12px;margin-bottom: 15px;
+        }
+        .race-round {
+            color: #e10600;font-size: 13px;font-weight: 700;letter-spacing: 1px;
+        }
+        .race-date {
+            font-size: 14px;font-weight: 600;background: #2a2a2a;padding: 4px 10px;border-radius: 6px;
+        }
+        .race-country {
+            font-size: 22px;font-weight: bold;margin-bottom: 5px;
+        }
+        .race-name {
+            color: #888;font-size: 12px;margin-bottom: 20px;min-height: 35px;
+        }
+        .race-footer {
+            display: flex;justify-content: space-between;align-items: center;margin-top: auto;
+        }
+        .btn-details {
+            background: transparent;border: 1px solid #555;color: #fff;padding: 6px 15px;border-radius: 5px;font-size: 12px;transition: 0.3s;font-family: 'Orbitron', sans-serif;width: 100%;text-align: center;
+        }
+        .race-card:hover .btn-details {
+            background: #fff;color: #151515;border-color: #fff;font-weight: 600;
+        }
+        .race-icon {
+            color: #555;transition: 0.3s;
+        }
+        .race-card:hover .race-icon {
+            color: #00ff95;transform: translateX(5px);
+        }
+    </style>
+</head>
+<body class="bg-secondary" style="overflow-x: hidden;">
+    <nav class="navbar navbar-expand-md py-0" style="background-color: rgb(86, 86, 86);">
+        <div class="container-fluid d-flex">
+            <a href="f1.html" class="navbar-brand" style="padding-right: 5%;">
+                <img src="f1logo.png" alt="" style="height: 15vh;">
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#buton">
+                <i class="fa-solid fa-bars text-white fs-3"></i>
+            </button>
+            <div class="collapse navbar-collapse align-items-stretch" id="buton">
+                <ul class="navbar-nav nav-fill deneme mx-auto">
+                    <li class="nav-item d-flex align-items-center navbaricon"><a href="takimlarnew.html" class="nav-link text-white renk" style="letter-spacing: 0.5px;">TAKIMLAR</a></li>                    
+                    <li class="nav-item d-flex align-items-center navbaricon"><a href="pilotlar.html" class="nav-link text-white renk" style="letter-spacing: 0.5px;">PİLOTLAR</a></li>
+                    <li class="nav-item d-flex align-items-center navbaricon"><a href="takvimyeni.html" class="nav-link renk" style="letter-spacing: 0.5px; color: white;">TAKVİM</a></li>
+                    <li class="nav-item d-flex align-items-center navbaricon"><a href="f1.html" class="nav-link text-white renk" style="letter-spacing: 0.5px;">BİLETLER</a></li>
+                </ul>
+                <div class="d-flex align-items-center justify-content-center gap-3 ms-md-auto py-3 py-md-0 pe-md-4">
+                    <a href="javascript:void(0);" onclick="girisYap()" class="btn btn-outline-light btn-sm px-3 py-2" style="font-family: 'Orbitron', sans-serif;">Giriş Yap</a>
+                    <a href="javascript:void(0);" onclick="kayitOl()" class="btn btn-register btn-sm px-3 py-2 text-white" style="background-color: #e10600; font-family: 'Orbitron', sans-serif;">Kayıt Ol</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5 mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="text-white m-0" style="font-family: 'Orbitron', sans-serif;">2026 F1 Yarış Takvimi</h2>
+            <span class="badge" style="background-color: #e10600; font-size: 14px; font-family: 'Orbitron', sans-serif;">22 YARIŞ</span>
+        </div>
+        <div class="calendar-grid" id="calendarGrid"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script>
+        // Her yarış için "url" parametresi eklendi
+        const races = [
+            { round: 1, date: "06 MAR - 08 MAR", country: "Avustralya", gpName: "Melbourne: Albert Park", url: "avustralyagp.html" },
+            { round: 2, date: "13 MAR - 15 MAR", country: "Çin", gpName: "Şanghay Uluslararası Pisti", url: "çingp.html" },
+            { round: 3, date: "27 MAR - 29 MAR", country: "Japonya", gpName: "Suzuka Pisti", url: "japonyagp.html" },
+            { round: 4, date: "01 MAY - 03 MAY", country: "Amerika", gpName: "Miami Uluslararası pisti", url: "miamigp.html" },
+            { round: 5, date: "22 MAY - 24 MAY", country: "Kanada", gpName: "Circuit Gilles Villeneuve", url: "kanadagp.html" },
+            { round: 6, date: "05 HAZ - 07 HAZ", country: "Monako", gpName: "Circuit de Monaco", url: "monacogp.html" },
+            { round: 7, date: "12 HAZ - 14 HAZ", country: "İspanya", gpName: "Circuit de Barcelona-Catalunya", url: "barcelonagp.html" },
+            { round: 8, date: "26 HAZ - 28 HAZ", country: "Avusturya", gpName: "Red Bull Ring", url: "avusturyagp.html" },
+            { round: 9, date: "03 TEM - 05 TEM", country: "Birleşik Krallık", gpName: "Silverstone Pisti", url: "silverstone.html" },
+            { round: 10, date: "17 TEM - 19 TEM", country: "Belçika", gpName: "Circuit de Spa-Francorchamps", url: "spagp.html" },
+            { round: 11, date: "24 TEM - 26 TEM", country: "Macaristan", gpName: "Hungaroring", url: "macaristangp.html" },
+            { round: 12, date: "21 AUG - 23 AUG", country: "Hollanda", gpName: "Zandvoort Pisti", url: "hollandagp.html" },
+            { round: 13, date: "04 EYL - 06 EYL", country: "İtalya", gpName: "Autodromo Nazionale Monza", url: "monzagp.html" },
+            { round: 14, date: "11 EYL - 13 EYL", country: "İspanya", gpName: "Madrid", url: "madridgp.html" },
+            { round: 15, date: "25 EYL - 27 EYL", country: "Azerbaycan", gpName: "Bakü Şehir Pisti", url: "bakügp.html" },
+            { round: 16, date: "09 EKİ - 11 EKİ", country: "Singapur", gpName: "Marina Bay Street Circuit", url: "singapur.-gp.html" },
+            { round: 17, date: "23 EKİ - 25 EKİ", country: "Amerika", gpName: " COTA Circuit of the Americas", url: "cotagp.html" },
+            { round: 18, date: "30 EKİ - 01 KAS", country: "Meksika", gpName: "Autódromo Hermanos Rodríguez", url: "meksika.html" },
+            { round: 19, date: "06 KAS - 08 KAS", country: "Brezilya", gpName: "Interlagos Pisti", url: "brezilyagp.html" },
+            { round: 20, date: "19 KAS - 21 KAS", country: "Amerika", gpName: "Las Vegas Cadde Pisti", url: "lasvegas.html" },
+            { round: 21, date: "27 KAS - 29 KAS", country: "Katar", gpName: "Lusail Uluslararası Pisti", url: "katargp.html" },
+            { round: 22, date: "04 ARA - 06 ARA", country: "Birleşik Arap Emirlikleri", gpName: "Abu Dhabi Yas Marina Pisti", url: "abudhabi.html" }
+        ];
+
+        const grid = document.getElementById("calendarGrid");
+        races.forEach(race => {
+            // Kartın dış div etiketine onclick="window.location.href='...' eklendi
+            grid.innerHTML += `
+            <div class="race-card" onclick="window.location.href='${race.url}';">
+                <div>
+                    <div class="race-header">
+                        <span class="race-round">ROUND ${race.round}</span>
+                        <span class="race-date">${race.date}</span>
+                    </div>
+                    <div class="race-country">
+                        ${race.country}
+                    </div>
+                    <div class="race-name">
+                        ${race.gpName}
+                    </div>
+                </div>
+                <div class="race-footer">
+                    <div class="btn-details">
+                        Yarış Detayları
+                    </div>
+                    <i class="fa-solid fa-chevron-right race-icon fs-5 ms-3"></i>
+                </div>
+            </div>
+            `;
+        });
+    </script>
+    <script>
+
+async function kayitOl() {
+    const kullaniciAdi = prompt("F1 Bilet Sistemi - Kullanıcı Adı Belirleyin:");
+    if (!kullaniciAdi || kullaniciAdi.trim() === "") return;
+    const eposta = prompt("E-posta Adresinizi Girin:");
+    if (!eposta || eposta.trim() === "") return;
+    const sifre = prompt("Şifrenizi Belirleyin:");
+    if (!sifre || sifre.trim() === "") return;
+
+    try {
+        const response = await fetch('http://localhost:5057/api/kayit-ol', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ kullaniciAdi: kullaniciAdi, eposta: eposta, sifre: sifre })
+        });
+        const sonuc = await response.json();
+        if (response.ok) {
+            alert(`🎉 ${sonuc.mesaj}\nArtık belirlediğiniz bilgilerle giriş yapabilirsiniz.`);
+        } else {
+            alert(`⚠️ Kayıt Hatası: ${sonuc.hata}`);
+        }
+    } catch (error) {
+        alert("Sistem hatası: API ile bağlantı kurulamadı!");
+    }
+}
+
+async function girisYap() {
+    const kullaniciAdi = prompt("Kullanıcı Adınız:");
+    if (!kullaniciAdi || kullaniciAdi.trim() === "") return;
+    const sifre = prompt("Şifreniz:");
+    if (!sifre || sifre.trim() === "") return;
+
+    try {
+        const response = await fetch('http://localhost:5057/api/giris-yap', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ kullaniciAdi: kullaniciAdi, sifre: sifre })
+        });
+        const sonuc = await response.json();
+        if (response.ok) {
+            alert(sonuc.mesaj); 
+            localStorage.setItem("aktifKullanici", sonuc.kullaniciAdi);
+        } else {
+            alert(`⚠️ Giriş Başarısız: ${sonuc.hata}`);
+        }
+    } catch (error) {
+        alert("Sistem hatası: API ile bağlantı kurulamadı!");
+    }
+}
+</script>
+</body>
+</html>
