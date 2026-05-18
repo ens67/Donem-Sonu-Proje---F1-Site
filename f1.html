@@ -542,12 +542,10 @@ onclick="createPassengerForms()">
 
 const tracks = [];
 
-// Sayfa yüklendiğinde C# API'sinden güncel yarışları çeker
     document.addEventListener("DOMContentLoaded", function() {
         yarisleriGetir();
     });
 
-    // 1. CREATE İŞLEMİ: C# API'ye Kullanıcı Kaydetme (Register)
 async function kayitOl() {
     const kullaniciAdi = prompt("F1 Bilet Sistemi - Kullanıcı Adı Belirleyin:");
     if (!kullaniciAdi || kullaniciAdi.trim() === "") return;
@@ -577,7 +575,6 @@ async function kayitOl() {
     }
 }
 
-// 2. READ & VALIDATION İŞLEMİ: Kullanıcı Giriş Kontrolü (Login)
 async function girisYap() {
     const kullaniciAdi = prompt("Kullanıcı Adınız:");
     if (!kullaniciAdi || kullaniciAdi.trim() === "") return;
@@ -595,10 +592,8 @@ async function girisYap() {
         const sonuc = await response.json();
 
         if (response.ok) {
-            // C#'tan gelen override edilmiş Polymorphism mesajını alert ile basıyoruz
             alert(sonuc.mesaj); 
             
-            // İsteğe bağlı: Giriş yapan kullanıcının adını localStorageda tutabiliriz
             localStorage.setItem("aktifKullanici", sonuc.kullaniciAdi);
         } else {
             alert(`⚠️ Giriş Başarısız: ${sonuc.hata}`);
@@ -608,20 +603,17 @@ async function girisYap() {
     }
 }
 
-    // 1. READ İŞLEMİ: Yarışları API'den Çekip Ekrana Basma
     async function yarisleriGetir() {
     try {
-        // C# API portunu (Örn: 5000 veya 5057) kendi terminalinde ne yazıyorsa onunla değiştir!
         const response = await fetch('http://localhost:5057/api/yarislar');
         const yarislar = await response.json();
         
         const trackGrid = document.getElementById("trackGrid"); 
         if(!trackGrid) return;
         
-        trackGrid.innerHTML = ""; // Sayfa yüklendiğinde içini sıfırla
+        trackGrid.innerHTML = "";
 
         yarislar.forEach(yaris => {
-            // Görseldeki profesyonel ve Orbitron tasarıma sadık dikey dairesel kart yapısı
             trackGrid.innerHTML += `
     <div class="col">
         <div class="card h-100 bg-dark text-white border-0 shadow-lg" 
@@ -676,7 +668,6 @@ async function girisYap() {
 }
     
 
-    // 2. UPDATE & EXCEPTION HANDLING İŞLEMİ: Bilet Satın Alma
     async function biletSatinAl(yarisId, yarisAdi) {
         const musteriAdi = prompt(`${yarisAdi} için bilet alacak kişinin adı ve soyadı:`);
         if (!musteriAdi || musteriAdi.trim() === "") return;
@@ -692,9 +683,8 @@ async function girisYap() {
 
             if (response.ok) {
                 alert(`🎉 Tebrikler Sayın ${musteriAdi}!\nBiletiniz Başarıyla Onaylandı.\n🎫 Bilet Kodunuz: ${sonuc.biletKodu}`);
-                yarisleriGetir(); // Kapasitenin anlık düştüğünü görmek için ekranı yenile
+                yarisleriGetir(); 
             } else {
-                // C#'taki 'throw new Exception' mesajı buraya düşer
                 alert(`⚠️ İşlem Başarısız: ${sonuc.hata}`);
             }
         } catch (error) {
