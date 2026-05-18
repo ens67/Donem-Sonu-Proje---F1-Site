@@ -1,17 +1,12 @@
 [
   {
     "KullaniciAdi": "enes",
-    "Eposta": "enes",
-    "Sifre": "31"
+    "Eposta": "enes@mail.com",
+    "Sifre": "3"
   },
   {
     "KullaniciAdi": "sadi",
     "Eposta": "e2",
     "Sifre": "33"
-  },
-  {
-    "KullaniciAdi": "Abuzer",
-    "Eposta": "zartzurt",
-    "Sifre": "55"
   }
 ]
